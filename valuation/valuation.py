@@ -10,3 +10,9 @@ class Valuation(object):
         self.matchings = pd.read_csv(matchings)
         self.top_products = pd.DataFrame()
 
+    def converse_currency(self):
+        for index, row in self.data.iterrows():
+            if row['currency'] != 'PLN':
+                self.data['price'][index] = row['price'] * self.currencies['ratio'].loc[self.currencies['currency'] == row['currency']]
+                self.data['currency'].loc[index] = 'PLN'
+
