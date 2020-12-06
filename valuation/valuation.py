@@ -16,3 +16,9 @@ class Valuation(object):
                 self.data['price'][index] = row['price'] * self.currencies['ratio'].loc[self.currencies['currency'] == row['currency']]
                 self.data['currency'].loc[index] = 'PLN'
 
+    def total_price(self):
+        self.data['total_price'] = self.data['price'] * self.data['quantity']
+
+    def sort_values(self):
+        self.data = self.data.sort_values(by=['matching_id', 'total_price'], ascending=False)
+
