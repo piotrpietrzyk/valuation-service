@@ -22,27 +22,27 @@ Saving the results to the  _data/top_products.csv_ .
 
 ## Usage
 
-0. Activate virtual environment:
+1. Activate virtual environment:
 
         virtualenv venv
         source venv/bin/activate
 
-1. Install requirements:
+2. Install requirements:
 
         pip install -r requirements.txt
 
-2. Run application:
+3. Run application:
 
         python app.py -c data/currencies.csv -d data/data.csv -m data/matching.csv
 
 ## Testing
 
-0. Run tests:
+1. Run tests:
 
         cd tests
         pytest valuation_test.py
 
-1. Run tests with coverage and reporting:
+2. Run tests with coverage and reporting:
 
         cd tests
         pytest --cov valuation --cov-report annotate
