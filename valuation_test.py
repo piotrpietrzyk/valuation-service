@@ -29,8 +29,7 @@ def test_total_price(val):
         assert row['total_price'] == row['price'] * row['quantity']
 
 
-@pytest.mark.parametrize("matching_id",
-                         (1, 2, 3))
+@pytest.mark.parametrize("matching_id", (1, 2, 3))
 def test_sort_values(val, matching_id):
     val.converse_currency()
     val.total_price()
@@ -40,9 +39,26 @@ def test_sort_values(val, matching_id):
     for index, row in val.data.iterrows():
         if row['matching_id'] == matching_id:
             values_list.append(row['total_price'])
-
     assert values_list == sorted(values_list, reverse=True)
 
 
-def test_top_product():
-    pass
+@pytest.mark.parametrize("column", ("matching_id", "total_price", "avg_price", "currency", "ignored_products_count"))
+def test_top_product(val, column):
+    val.converse_currency()
+    val.total_price()
+    val.sort_values()
+    val.top_product()
+    assert not val.top_products.isnull().values.any()
+    assert column in val.top_products.columns
+
+
+def test_save_csv(val, tmpdir):
+    val.converse_currency()
+    val.total_price()
+    val.sort_values()
+    val.top_product()
+    temp_file = tmpdir.join('test.csv')
+    val.save_csv(temp_file)
+    read_temp_file = pd.read_csv(temp_file)
+    pd.testing.assert_frame_equal(val.top_products.reset_index(drop=True), read_temp_file.reset_index(drop=True))
+
