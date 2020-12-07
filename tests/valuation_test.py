@@ -1,14 +1,11 @@
 import pytest
-import os
 from valuation import valuation
 import pandas as pd
-
-cwd = os.getcwd()
 
 
 @pytest.fixture
 def val():
-    val = valuation.Valuation(f'{cwd}/data/data.csv', f'{cwd}/data/currencies.csv', f'{cwd}/data/matching.csv')
+    val = valuation.Valuation(f'../data/data.csv', f'../data/currencies.csv', f'../data/matching.csv')
     return val
 
 
